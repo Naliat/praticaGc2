@@ -2,14 +2,13 @@ name: Primeiro Workflow
 
 on:
   push:
-    branches: [ "main" ]   
+    branches: [ "main" ]
 
 jobs:
   exemplo-job:
     runs-on: ubuntu-latest
 
     steps:
-      
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -18,9 +17,17 @@ jobs:
         with:
           node-version: '18'
 
-      
+      - name: Instalar dependências
+        run: npm install
+
       - name: Mostrar mensagem
         run: echo "Pipeline executada com sucesso!"
 
       - name: Listar arquivos
         run: ls -la
+
+      - name: Rodar servidor Node (teste rápido)
+        run: |
+          node src/server.js &
+          sleep 5
+          curl http://localhost:3000
